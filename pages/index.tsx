@@ -8,7 +8,6 @@ import {
     Grid,
     List,
     MediaQuery,
-    SimpleGrid,
     Table,
     Text,
     ThemeIcon,
@@ -17,6 +16,7 @@ import {
 } from '@mantine/core';
 import Head from 'next/head';
 import {IconMapPin, IconStar} from "@tabler/icons";
+import {Carousel} from "@mantine/carousel";
 
 interface LanguageProps {
     id: number;
@@ -272,7 +272,9 @@ const useStyles = createStyles((theme) => ({
         backgroundColor: theme.colors.gray[1],
         padding: theme.spacing.lg,
         borderRadius: theme.radius.lg,
-        height: '100px',
+        [`@media (max-width: ${theme.breakpoints.sm}px)`]: {
+            height: '140px',
+        },
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
@@ -503,17 +505,28 @@ export default function Home() {
                 </MediaQuery>
             </Box>
 
-            <SimpleGrid mt={12} breakpoints={[
-                {minWidth: 'xs', cols: 2},
-                {minWidth: 'md', cols: 4},
-                {minWidth: 'lg', cols: 6},
-            ]}>
+            <Carousel mt={12} mx="auto" slideSize={'35%'} slideGap={'md'} loop align={'start'}>
                 {SKILLS_HIGHLIGHT.map(skill => (
-                    <Box className={classes.highlight} key={skill.id}>
-                        <Text fz={14} fw={500}>{skill.name}</Text>
-                    </Box>
+                    <Carousel.Slide key={skill.id}>
+                        <Box className={classes.highlight}>
+                            <Text fz={14} fw={500}>{skill.name}</Text>
+                        </Box>
+                    </Carousel.Slide>
                 ))}
-            </SimpleGrid>
+                {/*<Carousel.Slide>1</Carousel.Slide>*/}
+            </Carousel>
+
+            {/*<SimpleGrid mt={12} breakpoints={[*/}
+            {/*    {minWidth: 'xs', cols: 2},*/}
+            {/*    {minWidth: 'md', cols: 4},*/}
+            {/*    {minWidth: 'lg', cols: 6},*/}
+            {/*]}>*/}
+            {/*    {SKILLS_HIGHLIGHT.map(skill => (*/}
+            {/*        <Box className={classes.highlight} key={skill.id}>*/}
+            {/*            <Text fz={14} fw={500}>{skill.name}</Text>*/}
+            {/*        </Box>*/}
+            {/*    ))}*/}
+            {/*</SimpleGrid>*/}
 
             <SectionTitle title={'About Me'} sx={{mt: 16}}/>
 

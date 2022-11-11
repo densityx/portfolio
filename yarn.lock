@@ -231,6 +231,13 @@
   resolved "https://registry.yarnpkg.com/@humanwhocodes/object-schema/-/object-schema-1.2.1.tgz#b520529ec21d8e5945a1851dfd1c32e94e39ff45"
   integrity sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==
 
+"@mantine/carousel@^5.7.1":
+  version "5.7.1"
+  resolved "https://registry.yarnpkg.com/@mantine/carousel/-/carousel-5.7.1.tgz#e95204acc28a5ed55fe83e10d7bb2fb7f97ab4e7"
+  integrity sha512-wWQ03IjutYId2RpdVP9TMRak+M+vO4KM4cn0pCwG7MoBBPUusMjEKMAXMrIhYMHTxE6q5KP1WeXWlbxse8/twQ==
+  dependencies:
+    "@mantine/utils" "5.7.1"
+
 "@mantine/core@^5.7.1":
   version "5.7.1"
   resolved "https://registry.yarnpkg.com/@mantine/core/-/core-5.7.1.tgz#2fdbff0c0034a46d9f68bde560ce547e2f83e248"
@@ -925,6 +932,18 @@ duplexer2@^0.1.2:
   integrity sha512-asLFVfWWtJ90ZyOUHMqk7/S2w2guQKxUI2itj3d92ADHhxUSbCMGi1f1cBcJ7xM1To+pE/Khbwo1yuNbMEPKeA==
   dependencies:
     readable-stream "^2.0.2"
+
+embla-carousel-react@^7.0.5:
+  version "7.0.5"
+  resolved "https://registry.yarnpkg.com/embla-carousel-react/-/embla-carousel-react-7.0.5.tgz#c6a079e382432335e34adb16bb11558df047760c"
+  integrity sha512-qhw980gKj7G+O5d3WSwj0TyhcbpGP3DqJPiAatt1t3wEEcZqn7csaIfLh4e1N/0kna9sZfZZRzz+//NSrUodSg==
+  dependencies:
+    embla-carousel "7.0.5"
+
+embla-carousel@7.0.5:
+  version "7.0.5"
+  resolved "https://registry.yarnpkg.com/embla-carousel/-/embla-carousel-7.0.5.tgz#b43e590c072d06a5b11d4ce19d024f5f07a62862"
+  integrity sha512-loRcu0La0F7bhEMwbvgpi14iaaIEdwacH1xoplnaYfwN4KMgECkiuLgu4lx+v6MYd6lSpg/bw7ZxEuLUwYjavg==
 
 emoji-regex@^9.2.2:
   version "9.2.2"
