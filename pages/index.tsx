@@ -8,6 +8,7 @@ import {
     Grid,
     List,
     MediaQuery,
+    Space,
     Table,
     Text,
     ThemeIcon,
@@ -15,7 +16,16 @@ import {
     Tooltip
 } from '@mantine/core';
 import Head from 'next/head';
-import {IconMapPin, IconStar} from "@tabler/icons";
+import {
+    IconAppWindow,
+    IconDatabase,
+    IconDotsDiagonal,
+    IconLanguage,
+    IconMapPin,
+    IconScribble,
+    IconServer,
+    IconStar
+} from "@tabler/icons";
 import {Carousel} from "@mantine/carousel";
 
 interface LanguageProps {
@@ -27,6 +37,7 @@ interface LanguageProps {
 interface MeProps {
     name: string;
     role: string;
+    poster: string;
     languages: LanguageProps[];
     description: string;
     birthday: string;
@@ -40,6 +51,7 @@ interface MeProps {
 const ME: MeProps = {
     name: 'Ahmad Abdul Aziz',
     role: 'Software Engineer (Focusing on the Front-end Side)',
+    poster: '/images/profile-picture.jpeg',
     languages: [
         {
             id: 1,
@@ -189,6 +201,7 @@ interface SkillsProps {
     id: number;
     name: string;
     skills: string[];
+    icon: string;
 }
 
 const SKILLS: SkillsProps[] = [
@@ -202,6 +215,7 @@ const SKILLS: SkillsProps[] = [
             'HTML',
             'CSS',
         ],
+        icon: 'IconLanguage'
     },
     {
         id: 2,
@@ -213,6 +227,7 @@ const SKILLS: SkillsProps[] = [
             'Sass',
             'Tailwind CSS',
         ],
+        icon: 'IconAppWindow',
     },
     {
         id: 3,
@@ -223,6 +238,7 @@ const SKILLS: SkillsProps[] = [
             'NextJs',
             'Strapi CMS'
         ],
+        icon: 'IconServer',
     },
     {
         id: 4,
@@ -232,6 +248,7 @@ const SKILLS: SkillsProps[] = [
             'PostgreSQL',
             'NeSQL (Firebase)',
         ],
+        icon: 'IconDatabase'
     },
     {
         id: 5,
@@ -242,6 +259,7 @@ const SKILLS: SkillsProps[] = [
             'Adobe XD',
             'Framer',
         ],
+        icon: 'IconScribble',
     },
     {
         id: 6,
@@ -252,6 +270,7 @@ const SKILLS: SkillsProps[] = [
             'Consuming API',
             'Flutter UI',
         ],
+        icon: 'IconDotsDiagonal',
     },
 ];
 
@@ -453,6 +472,34 @@ const HonorAccordionItem = ({honor}: HonorAccordionItemProps) => (
     </Accordion.Item>
 )
 
+interface ParseIconProps {
+    icon: string;
+}
+
+const ParseIcon = ({icon}: ParseIconProps) => {
+    if (icon === 'IconLanguage') {
+        return <IconLanguage size={16}/>
+    }
+
+    if (icon === 'IconAppWindow') {
+        return <IconAppWindow size={16}/>
+    }
+
+    if (icon === 'IconServer') {
+        return <IconServer size={16}/>
+    }
+
+    if (icon === 'IconDatabase') {
+        return <IconDatabase size={16}/>
+    }
+
+    if (icon === 'IconScribble') {
+        return <IconScribble size={16}/>
+    }
+
+    return <IconDotsDiagonal size={16}/>
+}
+
 
 export default function Home() {
     const {classes} = useStyles();
@@ -477,11 +524,9 @@ export default function Home() {
                 <Avatar
                     variant="filled"
                     size="xl"
-                    color="teal"
                     radius="xl"
-                >
-                    AA
-                </Avatar>
+                    src={ME.poster} alt={ME.name + ' poster'}
+                />
 
                 <Title sx={{zIndex: 2}} mt={16} order={2} weight={500}>
                     {ME.name}
@@ -538,7 +583,7 @@ export default function Home() {
                             size="sm"
                             center
                             icon={
-                                <ThemeIcon color="teal.3" size={24} radius="xl">
+                                <ThemeIcon color="blue.3" size={24} radius="xl">
                                     <IconStar size={16}/>
                                 </ThemeIcon>
                             }
@@ -572,7 +617,7 @@ export default function Home() {
                                         variant={'outline'}
                                         mr={4}
                                         mb={4}
-                                        color={'gray.6'}
+                                        color={'gray.5'}
                                         key={language.id}
                                         sx={{
                                             '&:hover': {
@@ -602,10 +647,18 @@ export default function Home() {
 
                 <Table highlightOnHover withColumnBorders horizontalSpacing={'lg'} verticalSpacing={'lg'}>
                     <tbody>
-                    {SKILLS.map((skill) => (
-                        <tr key={skill.id}>
+                    {SKILLS.map((skill) => (<tr key={skill.id}>
                             <td>
-                                {skill.name}
+                                <Box sx={{
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                }}>
+                                    <ThemeIcon variant={'light'} radius={'lg'}>
+                                        <ParseIcon icon={skill.icon}/>
+                                    </ThemeIcon>
+                                    <Space w="sm"/>
+                                    {skill.name}
+                                </Box>
                             </td>
                             <td>
                                 {skill.skills.join(' - ')}
