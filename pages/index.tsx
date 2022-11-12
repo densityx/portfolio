@@ -3,11 +3,18 @@ import {
     Avatar,
     Badge,
     Box,
+    Button,
+    Card,
     Container,
     createStyles,
+    Flex,
     Grid,
+    Group,
+    Image,
     List,
     MediaQuery,
+    ScrollArea,
+    SimpleGrid,
     Space,
     Table,
     Text,
@@ -20,6 +27,7 @@ import {
     IconAppWindow,
     IconDatabase,
     IconDotsDiagonal,
+    IconExternalLink,
     IconLanguage,
     IconMapPin,
     IconScribble,
@@ -308,7 +316,7 @@ interface SectionTitleProps {
 
 const SectionTitle = ({title, sx}: SectionTitleProps) => (
     <Box p={16} {...sx}>
-        <Title fz={24}>
+        <Title order={2} fz={24}>
             {title}
         </Title>
     </Box>
@@ -345,21 +353,21 @@ const ExperienceAccordionItem = ({experience}: ExperienceAccordionItemProps) => 
             </Text>
         </Accordion.Control>
         <Accordion.Panel>
-            <Box sx={{display: 'flex', alignItems: 'center'}}>
+            <Flex align={'center'}>
                 <Text component={'p'} my={0} fz={18} fw={500} color={'blue.6'}>
                     {experience.company}
                 </Text>
 
-                <Box sx={{display: 'flex'}} ml={12}>
-                    <Text component={'p'} my={0} fz={14} fw={500}>
-                        {experience.start}
-                        <Text component={'span'} px={4}>
-                            -
-                        </Text>
-                        {experience.end}
+                <Space w={'sm'}/>
+
+                <Text component={'p'} my={0} fz={14} fw={500}>
+                    {experience.start}
+                    <Text component={'span'} px={4}>
+                        -
                     </Text>
-                </Box>
-            </Box>
+                    {experience.end}
+                </Text>
+            </Flex>
 
             <Text component={'p'} mb={0} fz={14}>
                 {experience.description}
@@ -367,6 +375,7 @@ const ExperienceAccordionItem = ({experience}: ExperienceAccordionItemProps) => 
 
             <Text sx={{display: 'flex', alignItems: 'center'}} component={'p'} mb={0}>
                 <IconMapPin size={14}/>
+
                 <Text component={'span'} fz={14} ml={4}>
                     {experience.location}
                 </Text>
@@ -405,28 +414,25 @@ const EducationAccordionItem = ({education}: EducationAccordionItemProps) => (
             </Text>
         </Accordion.Control>
         <Accordion.Panel>
-            <Box sx={{display: 'flex', alignItems: 'center'}}>
+            <Flex align={'center'}>
                 <Text component={'p'} my={0} fz={18} fw={500} color={'blue.6'}>
                     {education.course}
                 </Text>
 
-                <Box sx={{display: 'flex'}} ml={12}>
-                    <Text component={'p'} my={0} fz={14} fw={500}>
-                        {education.start}
-                        <Text component={'span'} px={4}>
-                            -
-                        </Text>
-                        {education.end}
-                    </Text>
-                </Box>
-            </Box>
+                <Space w={'sm'}/>
 
-            {/*<Text component={'p'} mb={0}>
-                {education.description}
-            </Text>*/}
+                <Text component={'p'} my={0} fz={14} fw={500}>
+                    {education.start}
+                    <Text component={'span'} px={4}>
+                        -
+                    </Text>
+                    {education.end}
+                </Text>
+            </Flex>
 
             <Text sx={{display: 'flex', alignItems: 'center'}} component={'p'} mb={0}>
                 <IconMapPin size={14}/>
+
                 <Text component={'span'} fz={14} ml={4}>
                     {education.location}
                 </Text>
@@ -453,17 +459,19 @@ const HonorAccordionItem = ({honor}: HonorAccordionItemProps) => (
             </Text>
         </Accordion.Control>
         <Accordion.Panel>
-            <Box sx={{display: 'flex', alignItems: 'center'}}>
+            <Flex align={'center'}>
                 <Text component={'p'} my={0} fz={18} fw={500} color={'blue.6'}>
                     {honor.from}
                 </Text>
 
-                <Box sx={{display: 'flex'}} ml={12}>
+                <Space w={'sm'}/>
+
+                <Flex>
                     <Text component={'p'} my={0} fz={14} fw={500}>
                         {honor.year}
                     </Text>
-                </Box>
-            </Box>
+                </Flex>
+            </Flex>
 
             <Text component={'p'} mb={0}>
                 {honor.description}
@@ -500,6 +508,103 @@ const ParseIcon = ({icon}: ParseIconProps) => {
     return <IconDotsDiagonal size={16}/>
 }
 
+interface ProjectProps {
+    id: number;
+    name: string;
+    year: number;
+    description: string;
+    cover: string;
+    link: string;
+    linkText: string;
+    technology: string[];
+}
+
+const PROJECTS: ProjectProps[] = [
+    {
+        id: 1,
+        name: 'Portfolio (This Website)',
+        year: 2022,
+        description: 'Ahmad Abdul Aziz personal portfolio. Built with Next.js, TypeScript, and Mantine UI.',
+        cover: '/images/portfolio.png',
+        link: 'https://github.com/densityx/portfolio',
+        linkText: 'View Repositry',
+        technology: ['Next.js', 'TypeScript', 'Mantine UI'],
+    },
+    {
+        id: 2,
+        name: 'PostSrc (Blog)',
+        year: 2020,
+        description: 'PostSrc (Post Source) a community of programmers sharing all things programming that includes a how-to tutorial, guides, and step by steps lessons.',
+        cover: '/images/blog.png',
+        link: 'https://postsrc.com',
+        linkText: 'View Blog',
+        technology: ['HTML', 'CSS', 'JS', 'PHP', 'Laravel', 'Livewire', 'Alpine Js', 'Tailwind CSS', 'Meilisearch'],
+    },
+];
+
+const ProjectCard = ({project}: { project: ProjectProps }) => (
+    <Card shadow="md" p={'lg'} radius="lg">
+        <Card.Section component="a" href={project.link} target={"_blank"}>
+            <Box
+                p={16}
+                bg={'gray.0'}
+            >
+                <Box
+                    p={8}
+                    bg={'white'}
+                    sx={(theme) => ({
+                        borderRadius: theme.radius.md,
+                    })}
+                >
+                    <Image
+                        src={project.cover}
+                        height={'100%'}
+                        alt="Norway"
+                    />
+                </Box>
+            </Box>
+        </Card.Section>
+
+        <ScrollArea type={'never'} mt={16}>
+            <Group spacing={'sm'} sx={{flexWrap: 'nowrap'}}>
+                {project.technology.map((tech, index) => (
+                    <Badge variant={'light'} color={'gray'} key={index}>
+                        {tech}
+                    </Badge>
+                ))}
+            </Group>
+        </ScrollArea>
+
+        <Group position="apart" mt="md" mb="xs">
+            <Title order={3} fz={18} weight={500}>
+                {project.name}
+            </Title>
+
+            <Badge color="pink" variant="light">
+                {project.year}
+            </Badge>
+        </Group>
+
+        <Box sx={{height: 60}}>
+            <Text component={'p'} size="sm" color="dimmed">
+                {project.description}
+            </Text>
+        </Box>
+
+        <Button
+            component={'a'}
+            href={project.link}
+            variant="light"
+            leftIcon={<IconExternalLink size={14}/>}
+            target={"_blank"}
+            color="blue"
+            fullWidth mt="md"
+            radius="md"
+        >
+            {project.linkText}
+        </Button>
+    </Card>
+);
 
 export default function Home() {
     const {classes} = useStyles();
@@ -538,6 +643,7 @@ export default function Home() {
 
                 <Text sx={{display: 'flex', alignItems: 'center'}} component={'p'} my={0}>
                     <IconMapPin size={14}/>
+                    
                     <Text component={'span'} fz={14} ml={4}>
                         {ME.location}
                     </Text>
@@ -558,20 +664,7 @@ export default function Home() {
                         </Box>
                     </Carousel.Slide>
                 ))}
-                {/*<Carousel.Slide>1</Carousel.Slide>*/}
             </Carousel>
-
-            {/*<SimpleGrid mt={12} breakpoints={[*/}
-            {/*    {minWidth: 'xs', cols: 2},*/}
-            {/*    {minWidth: 'md', cols: 4},*/}
-            {/*    {minWidth: 'lg', cols: 6},*/}
-            {/*]}>*/}
-            {/*    {SKILLS_HIGHLIGHT.map(skill => (*/}
-            {/*        <Box className={classes.highlight} key={skill.id}>*/}
-            {/*            <Text fz={14} fw={500}>{skill.name}</Text>*/}
-            {/*        </Box>*/}
-            {/*    ))}*/}
-            {/*</SimpleGrid>*/}
 
             <SectionTitle title={'About Me'} sx={{mt: 16}}/>
 
@@ -614,10 +707,10 @@ export default function Home() {
                             {ME.languages.map((language: LanguageProps) => (
                                 <Tooltip label={language.level} key={language.id}>
                                     <Badge
-                                        variant={'outline'}
+                                        variant={'light'}
                                         mr={4}
                                         mb={4}
-                                        color={'gray.5'}
+                                        color={'blue.5'}
                                         key={language.id}
                                         sx={{
                                             '&:hover': {
@@ -649,16 +742,13 @@ export default function Home() {
                     <tbody>
                     {SKILLS.map((skill) => (<tr key={skill.id}>
                             <td>
-                                <Box sx={{
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                }}>
+                                <Flex align={'center'}>
                                     <ThemeIcon variant={'light'} radius={'lg'}>
                                         <ParseIcon icon={skill.icon}/>
                                     </ThemeIcon>
                                     <Space w="sm"/>
                                     {skill.name}
-                                </Box>
+                                </Flex>
                             </td>
                             <td>
                                 {skill.skills.join(' - ')}
@@ -699,9 +789,23 @@ export default function Home() {
                 </Accordion>
             </Box>
 
-            <Box mb={10}>
-                <Text component={'p'} my={0}></Text>
+            <Box>
+                <SectionTitle title={'Projects'} sx={{mt: 16}}/>
+
+                <SimpleGrid breakpoints={[
+                    {minWidth: 800, cols: 2, spacing: 'xl'},
+                    {minWidth: 500, cols: 1, spacing: 'xl'},
+                ]}>
+                    {PROJECTS.map((project: ProjectProps) => (
+                        <ProjectCard
+                            project={project}
+                            key={project.id}
+                        />
+                    ))}
+                </SimpleGrid>
             </Box>
+
+            <Space h={100}/>
         </Container>
     )
 }
