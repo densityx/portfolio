@@ -1,10 +1,12 @@
 import {
     Accordion,
+    ActionIcon,
     Avatar,
     Badge,
     Box,
     Button,
     Card,
+    Center,
     Container,
     createStyles,
     Flex,
@@ -16,6 +18,7 @@ import {
     ScrollArea,
     SimpleGrid,
     Space,
+    Stack,
     Table,
     Text,
     ThemeIcon,
@@ -25,16 +28,24 @@ import {
 import Head from 'next/head';
 import {
     IconAppWindow,
+    IconBrandGithub,
+    IconBrandLinkedin,
+    IconCoffee,
     IconDatabase,
     IconDotsDiagonal,
     IconExternalLink,
+    IconHeart,
     IconLanguage,
+    IconMail,
     IconMapPin,
+    IconPhone,
     IconScribble,
     IconServer,
     IconStar
 } from "@tabler/icons";
 import {Carousel} from "@mantine/carousel";
+import {useScrollIntoView} from '@mantine/hooks';
+import {useState} from "react";
 
 interface LanguageProps {
     id: number;
@@ -54,6 +65,7 @@ interface MeProps {
     github: string;
     linkedIn: string;
     location: string
+    contact: string;
 }
 
 const ME: MeProps = {
@@ -83,7 +95,8 @@ const ME: MeProps = {
     email: 'ahmadaziz97@live.com',
     github: 'github.com/densityx',
     linkedIn: 'linkedin.com/in/densityx',
-    location: 'Petaling Jaya / Kuala Lumpur, Malaysia'
+    location: 'Petaling Jaya / Kuala Lumpur, Malaysia',
+    contact: 'You can contact me via email or phone number above. I am also available on LinkedIn and GitHub.'
 };
 
 interface SkillsHighlightProps {
@@ -97,7 +110,7 @@ const SKILLS_HIGHLIGHT: SkillsHighlightProps[] = [
     {id: 3, name: 'Figma, Adobe XD, Sketch'},
     {id: 4, name: 'Tailwind CSS, Bootstrap 5, MUI, Mantine'},
     {id: 5, name: 'PostgreSQL, MySQL, Firebase'},
-    {id: 5, name: 'HTML, CSS, JavaScript, TypeScript'},
+    {id: 6, name: 'HTML, CSS, JavaScript, TypeScript'},
 ];
 
 interface ExperienceProps {
@@ -197,7 +210,7 @@ const HONORS: HonorsProps[] = [
         description: 'Bsc. (Hons) Computing First Class Honours',
     },
     {
-        id: 1,
+        id: 2,
         name: 'SIRIM Invention, Innovation & Technology Expo (SI2TE)\n',
         from: 'SIRIM',
         year: 'Apr 2018',
@@ -286,14 +299,9 @@ const useStyles = createStyles((theme) => ({
     card: {
         display: 'flex',
         flexDirection: 'column',
-        // alignItems: 'center',
         backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
         padding: theme.spacing.xl,
         borderRadius: theme.radius.md,
-        /*cursor: 'pointer',*/
-        /*'&:hover': {
-            backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[1],
-        },*/
     },
     highlight: {
         backgroundColor: theme.colors.gray[1],
@@ -322,19 +330,7 @@ const SectionTitle = ({title, sx}: SectionTitleProps) => (
     </Box>
 )
 
-interface ExperienceAccordionItemProps {
-    experience: {
-        id: number;
-        name: string;
-        company: string;
-        start: string;
-        end: string;
-        description: string;
-        location: string;
-    }
-}
-
-const ExperienceAccordionItem = ({experience}: ExperienceAccordionItemProps) => (
+const ExperienceAccordionItem = ({experience}: { experience: ExperienceProps }) => (
     <Accordion.Item value={experience.company}>
         <Accordion.Control>
             <Text component={'p'} weight={600} my={0}>
@@ -384,18 +380,7 @@ const ExperienceAccordionItem = ({experience}: ExperienceAccordionItemProps) => 
     </Accordion.Item>
 )
 
-interface EducationAccordionItemProps {
-    education: {
-        id: number;
-        name: string;
-        course: string;
-        start: string;
-        end: string;
-        location: string;
-    }
-}
-
-const EducationAccordionItem = ({education}: EducationAccordionItemProps) => (
+const EducationAccordionItem = ({education}: { education: EducationProps }) => (
     <Accordion.Item value={education.name}>
         <Accordion.Control>
             <Text component={'p'} weight={600} my={0}>
@@ -441,17 +426,7 @@ const EducationAccordionItem = ({education}: EducationAccordionItemProps) => (
     </Accordion.Item>
 )
 
-interface HonorAccordionItemProps {
-    honor: {
-        id: number;
-        name: string;
-        from: string;
-        year: string;
-        description: string;
-    }
-}
-
-const HonorAccordionItem = ({honor}: HonorAccordionItemProps) => (
+const HonorAccordionItem = ({honor}: { honor: HonorsProps }) => (
     <Accordion.Item value={honor.name}>
         <Accordion.Control>
             <Text component={'p'} weight={600} my={0}>
@@ -585,7 +560,11 @@ const ProjectCard = ({project}: { project: ProjectProps }) => (
             </Badge>
         </Group>
 
-        <Box sx={{height: 60}}>
+        <Box sx={(theme) => ({
+            [`@media (min-width: ${theme.breakpoints.sm}px)`]: {
+                height: theme.breakpoints.md ? '60px' : '100%',
+            }
+        })}>
             <Text component={'p'} size="sm" color="dimmed">
                 {project.description}
             </Text>
@@ -606,206 +585,308 @@ const ProjectCard = ({project}: { project: ProjectProps }) => (
     </Card>
 );
 
-export default function Home() {
-    const {classes} = useStyles();
+const CreditSection = () => {
+    const [heartCount, setHeartCount] = useState(0);
+    const [coffeeCount, setCoffeeCount] = useState(0);
 
     return (
-        <Container>
+        <Center mt={32}>
+            <Group spacing={4}>
+                <Text component={'span'} color="dimmed">
+                    Made with
+                </Text>
+                <ActionIcon
+                    color={'pink.5'}
+                    onClick={() => heartCount < 99 && setHeartCount(() => heartCount + 1)}
+                >
+                    {heartCount === 0 ? <IconHeart size={18}/> : heartCount}
+                </ActionIcon>
+                <Text component={'span'} color="dimmed">
+                    and
+                </Text>
+                <ActionIcon
+                    color={'green.5'}
+                    onClick={() => coffeeCount < 99 && setCoffeeCount(() => coffeeCount + 1)}
+                >
+                    {coffeeCount === 0 ? <IconCoffee size={18}/> : coffeeCount}
+                </ActionIcon>
+                <Text component={'span'} color="dimmed">
+                    by <Text component={'b'} fw={500}>Ahmad Abdul Aziz</Text>
+                </Text>
+            </Group>
+        </Center>
+    )
+}
+
+const Portfolio = () => {
+    const {classes} = useStyles();
+    const {scrollIntoView, targetRef} = useScrollIntoView<HTMLDivElement>();
+
+    return (
+        <>
             <Head>
-                <title>Ahmad Abdul Aziz Portfolio</title>
-                <meta name="description" content="Ahmad Abdul Aziz Portfolio built with NextJs and Mantine UI"/>
+                <title>
+                    Ahmad Abdul Aziz Portfolio
+                </title>
+                <meta
+                    name="description"
+                    content={'Ahmad Abdul Aziz personal portfolio. Built with Next.js, TypeScript, and Mantine UI.'}
+                />
                 <link rel="icon" href="/favicon.ico"/>
             </Head>
 
-            <Box
-                className={classes.card} mt={12}
-                ta={'center'}
-                sx={{
-                    alignItems: 'center',
-                    position: 'relative',
-                    overflow: 'hidden'
-                }}
-            >
-                <Avatar
-                    variant="filled"
-                    size="xl"
-                    radius="xl"
-                    src={ME.poster} alt={ME.name + ' poster'}
-                />
-
-                <Title sx={{zIndex: 2}} mt={16} order={2} weight={500}>
-                    {ME.name}
-                </Title>
-
-                <Text component="p">
-                    {ME.role}
-                </Text>
-
-                <Text sx={{display: 'flex', alignItems: 'center'}} component={'p'} my={0}>
-                    <IconMapPin size={14}/>
-                    
-                    <Text component={'span'} fz={14} ml={4}>
-                        {ME.location}
-                    </Text>
-                </Text>
-
-                <MediaQuery smallerThan="md" styles={{display: 'none'}}>
-                    <Box sx={{position: 'absolute', right: -80, bottom: -100, zIndex: 1}}>
-                        <img width={300} src="/images/bg.png" alt="background"/>
-                    </Box>
-                </MediaQuery>
-            </Box>
-
-            <Carousel mt={12} mx="auto" slideSize={'35%'} slideGap={'md'} loop align={'start'}>
-                {SKILLS_HIGHLIGHT.map(skill => (
-                    <Carousel.Slide key={skill.id}>
-                        <Box className={classes.highlight}>
-                            <Text fz={14} fw={500}>{skill.name}</Text>
-                        </Box>
-                    </Carousel.Slide>
-                ))}
-            </Carousel>
-
-            <SectionTitle title={'About Me'} sx={{mt: 16}}/>
-
-            <Grid gutter={'xl'}>
-                <Grid.Col sm={12} lg={4}>
-                    <Box className={classes.card}>
-                        <List
-                            spacing="xs"
-                            size="sm"
-                            center
-                            icon={
-                                <ThemeIcon color="blue.3" size={24} radius="xl">
-                                    <IconStar size={16}/>
-                                </ThemeIcon>
-                            }
-                            mt={12}
-                        >
-                            <List.Item>
-                                {ME.birthday}
-                            </List.Item>
-                            <List.Item>
-                                {ME.phone}
-                            </List.Item>
-                            <List.Item>
-                                {ME.email}
-                            </List.Item>
-                            <List.Item>
-                                <a href={'https://' + ME.github} target="_blank" rel="noopener noreferrer">
-                                    {ME.github}
-                                </a>
-                            </List.Item>
-                            <List.Item>
-                                <a href={'https://' + ME.linkedIn} target="_blank" rel="noopener noreferrer">
-                                    {ME.linkedIn}
-                                </a>
-                            </List.Item>
-                        </List>
-
-                        <Box mt={12}>
-                            {ME.languages.map((language: LanguageProps) => (
-                                <Tooltip label={language.level} key={language.id}>
-                                    <Badge
-                                        variant={'light'}
-                                        mr={4}
-                                        mb={4}
-                                        color={'blue.5'}
-                                        key={language.id}
-                                        sx={{
-                                            '&:hover': {
-                                                cursor: 'pointer'
-                                            }
-                                        }}
-                                    >
-                                        {language.name}
-                                    </Badge>
-                                </Tooltip>
-                            ))}
-                        </Box>
-                    </Box>
-                </Grid.Col>
-
-                <Grid.Col sm={12} lg={8}>
-                    <Box className={classes.card}>
-                        <Text component={'p'} my={0}>
-                            {ME.description}
-                        </Text>
-                    </Box>
-                </Grid.Col>
-            </Grid>
-
-            <Box>
-                <SectionTitle title={'Skills'} sx={{mt: 16}}/>
-
-                <Table highlightOnHover withColumnBorders horizontalSpacing={'lg'} verticalSpacing={'lg'}>
-                    <tbody>
-                    {SKILLS.map((skill) => (<tr key={skill.id}>
-                            <td>
-                                <Flex align={'center'}>
-                                    <ThemeIcon variant={'light'} radius={'lg'}>
-                                        <ParseIcon icon={skill.icon}/>
-                                    </ThemeIcon>
-                                    <Space w="sm"/>
-                                    {skill.name}
-                                </Flex>
-                            </td>
-                            <td>
-                                {skill.skills.join(' - ')}
-                            </td>
-                        </tr>
-                    ))}
-                    </tbody>
-                </Table>
-            </Box>
-
-            <Box>
-                <SectionTitle title={'Working Experience'} sx={{mt: 16}}/>
-
-                <Accordion variant="filled" defaultValue={EXPERIENCE[0].company} mt={12}>
-                    {EXPERIENCE.map(experience => (
-                        <ExperienceAccordionItem experience={experience} key={experience.id}/>
-                    ))}
-                </Accordion>
-            </Box>
-
-            <Box>
-                <SectionTitle title={'Education'} sx={{mt: 16}}/>
-
-                <Accordion variant="filled" defaultValue={EDUCATION[0].name} mt={12}>
-                    {EDUCATION.map(education => (
-                        <EducationAccordionItem education={education} key={education.id}/>
-                    ))}
-                </Accordion>
-            </Box>
-
-            <Box>
-                <SectionTitle title={'Honors & Awards'} sx={{mt: 16}}/>
-
-                <Accordion variant="filled" defaultValue={HONORS[0].name} mt={12}>
-                    {HONORS.map(honor => (
-                        <HonorAccordionItem honor={honor} key={honor.id}/>
-                    ))}
-                </Accordion>
-            </Box>
-
-            <Box>
-                <SectionTitle title={'Projects'} sx={{mt: 16}}/>
-
-                <SimpleGrid breakpoints={[
-                    {minWidth: 800, cols: 2, spacing: 'xl'},
-                    {minWidth: 500, cols: 1, spacing: 'xl'},
-                ]}>
-                    {PROJECTS.map((project: ProjectProps) => (
-                        <ProjectCard
-                            project={project}
-                            key={project.id}
+            <Container my={16}>
+                <Stack>
+                    <Flex
+                        className={classes.card}
+                        ta={'center'}
+                        align={'center'}
+                        sx={{
+                            position: 'relative',
+                            overflow: 'hidden'
+                        }}
+                    >
+                        <Avatar
+                            variant="filled"
+                            size="xl"
+                            radius="xl"
+                            src={ME.poster}
+                            alt={ME.name + ' poster'}
                         />
-                    ))}
-                </SimpleGrid>
-            </Box>
 
-            <Space h={100}/>
-        </Container>
+                        <Title mt={16} order={1} fz={24} weight={500}>
+                            {ME.name}
+                        </Title>
+
+                        <Text component="p" fz={{base: 'xs', md: 'md'}}>
+                            {ME.role}
+                        </Text>
+
+                        <Text sx={{display: 'flex', alignItems: 'center'}} component={'p'} my={0}>
+                            <IconMapPin size={14}/>
+
+                            <Text component={'span'} fz={14} ml={4}>
+                                {ME.location}
+                            </Text>
+                        </Text>
+
+                        <MediaQuery smallerThan="md" styles={{display: 'none'}}>
+                            <Box sx={{position: 'absolute', right: -80, bottom: -100, zIndex: 1}}>
+                                <img width={300} src="/images/bg.png" alt="background"/>
+                            </Box>
+                        </MediaQuery>
+                    </Flex>
+
+                    <Carousel sx={{width: '100%'}} mx="auto" slideSize={'35%'} slideGap={'md'} loop align={'start'}>
+                        {SKILLS_HIGHLIGHT.map((skill, index) => (
+                            <Carousel.Slide key={index}>
+                                <Box className={classes.highlight}>
+                                    <Text component={'p'} fz={14} fw={500}>{skill.name}</Text>
+                                </Box>
+                            </Carousel.Slide>
+                        ))}
+                    </Carousel>
+
+                    <SectionTitle title={'About Me'}/>
+
+                    <Grid gutter={'xl'}>
+                        <Grid.Col sm={12} lg={4}>
+                            <Box className={classes.card} ref={targetRef}>
+                                <List
+                                    spacing="xs"
+                                    size="sm"
+                                    center
+                                    icon={
+                                        <ThemeIcon color="blue.3" size={24} radius="xl">
+                                            <IconStar size={16}/>
+                                        </ThemeIcon>
+                                    }
+                                    mt={12}
+                                >
+                                    <List.Item>
+                                        {ME.birthday}
+                                    </List.Item>
+                                    <List.Item>
+                                        {ME.phone}
+                                    </List.Item>
+                                    <List.Item>
+                                        {ME.email}
+                                    </List.Item>
+                                    <List.Item>
+                                        <a href={'https://' + ME.github} target="_blank" rel="noopener noreferrer">
+                                            {ME.github}
+                                        </a>
+                                    </List.Item>
+                                    <List.Item>
+                                        <a href={'https://' + ME.linkedIn} target="_blank" rel="noopener noreferrer">
+                                            {ME.linkedIn}
+                                        </a>
+                                    </List.Item>
+                                </List>
+
+                                <Box mt={12}>
+                                    {ME.languages.map((language: LanguageProps) => (
+                                        <Tooltip label={language.level} key={language.id}>
+                                            <Badge
+                                                variant={'light'}
+                                                mr={4}
+                                                mb={4}
+                                                color={'blue.5'}
+                                                key={language.id}
+                                                sx={{
+                                                    '&:hover': {
+                                                        cursor: 'pointer'
+                                                    }
+                                                }}
+                                            >
+                                                {language.name}
+                                            </Badge>
+                                        </Tooltip>
+                                    ))}
+                                </Box>
+                            </Box>
+                        </Grid.Col>
+
+                        <Grid.Col sm={12} lg={8}>
+                            <Box className={classes.card}>
+                                <Text component={'p'} my={0}>
+                                    {ME.description}
+                                </Text>
+                            </Box>
+                        </Grid.Col>
+                    </Grid>
+
+                    <Box>
+                        <SectionTitle title={'Skills'}/>
+
+                        <Table highlightOnHover withColumnBorders horizontalSpacing={'lg'} verticalSpacing={'lg'}>
+                            <tbody>
+                            {SKILLS.map((skill) => (
+                                <tr key={skill.id}>
+                                    <td>
+                                        <Flex align={'center'}>
+                                            <ThemeIcon variant={'light'} radius={'lg'}>
+                                                <ParseIcon icon={skill.icon}/>
+                                            </ThemeIcon>
+                                            <Space w="sm"/>
+                                            {skill.name}
+                                        </Flex>
+                                    </td>
+                                    <td>
+                                        {skill.skills.join(' - ')}
+                                    </td>
+                                </tr>
+                            ))}
+                            </tbody>
+                        </Table>
+                    </Box>
+
+                    <Box>
+                        <SectionTitle title={'Working Experience'}/>
+
+                        <Accordion variant="filled" defaultValue={EXPERIENCE[0].company}>
+                            {EXPERIENCE.map(experience => (
+                                <ExperienceAccordionItem experience={experience} key={experience.id}/>
+                            ))}
+                        </Accordion>
+                    </Box>
+
+                    <Box>
+                        <SectionTitle title={'Education'}/>
+
+                        <Accordion variant="filled" defaultValue={EDUCATION[0].name}>
+                            {EDUCATION.map(education => (
+                                <EducationAccordionItem education={education} key={education.id}/>
+                            ))}
+                        </Accordion>
+                    </Box>
+
+                    <Box>
+                        <SectionTitle title={'Honors & Awards'}/>
+
+                        <Accordion variant="filled" defaultValue={HONORS[0].name}>
+                            {HONORS.map(honor => (
+                                <HonorAccordionItem honor={honor} key={honor.id}/>
+                            ))}
+                        </Accordion>
+                    </Box>
+
+                    <Box>
+                        <SectionTitle title={'Projects'}/>
+
+                        <SimpleGrid breakpoints={[
+                            {minWidth: 800, cols: 2, spacing: 'xl'},
+                            {minWidth: 500, cols: 1, spacing: 'xl'},
+                        ]}>
+                            {PROJECTS.map((project: ProjectProps) => (
+                                <ProjectCard project={project} key={project.id}/>
+                            ))}
+                        </SimpleGrid>
+                    </Box>
+
+                    <Box>
+                        <SectionTitle title={'Contact'}/>
+
+                        <Box className={classes.card}>
+                            <Flex align={'center'} justify={'center'}>
+                                <Group spacing={'sm'} sx={{flexWrap: 'nowrap'}}>
+                                    <ActionIcon
+                                        onClick={() => scrollIntoView()}
+                                        variant={'light'}
+                                        color={'blue'}
+                                        size={'lg'}
+                                        radius={'xl'}
+                                    >
+                                        <IconMail size={18}/>
+                                    </ActionIcon>
+
+                                    <ActionIcon
+                                        onClick={() => scrollIntoView()}
+                                        variant={'light'}
+                                        color={'blue'}
+                                        size={'lg'}
+                                        radius={'xl'}
+                                    >
+                                        <IconPhone size={18}/>
+                                    </ActionIcon>
+
+                                    <ActionIcon
+                                        component={'a'}
+                                        href={'https://' + ME.linkedIn}
+                                        target={'_blank'}
+                                        variant={'light'}
+                                        color={'blue'}
+                                        size={'lg'}
+                                        radius={'xl'}
+                                    >
+                                        <IconBrandLinkedin size={18}/>
+                                    </ActionIcon>
+
+                                    <ActionIcon
+                                        component={'a'}
+                                        href={'https://' + ME.github}
+                                        target={'_blank'}
+                                        variant={'light'}
+                                        color={'blue'}
+                                        size={'lg'}
+                                        radius={'xl'}
+                                    >
+                                        <IconBrandGithub size={18}/>
+                                    </ActionIcon>
+                                </Group>
+                            </Flex>
+
+                            <Text component={'p'} mb={0} align={'center'}>
+                                {ME.contact}
+                            </Text>
+                        </Box>
+
+                        <CreditSection/>
+                    </Box>
+                </Stack>
+            </Container>
+        </>
     )
 }
+
+export default Portfolio;
