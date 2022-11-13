@@ -625,13 +625,29 @@ const Portfolio = () => {
     return (
         <>
             <Head>
-                <title>
-                    Ahmad Abdul Aziz Portfolio
-                </title>
-                <meta
-                    name="description"
-                    content={'Ahmad Abdul Aziz personal portfolio. Built with Next.js, TypeScript, and Mantine UI.'}
-                />
+                {/*Primary Meta Tags*/}
+                <title>Ahmad Abdul Aziz Portfolio</title>
+                <meta name="title" content={'Ahmad Abdul Aziz Portfolio'}/>
+                <meta name="description"
+                      content={'Ahmad Abdul Aziz personal portfolio. Built with Next.js, TypeScript, and Mantine UI.'}/>
+
+                {/*Open Graph / Facebook*/}
+                <meta property="og:type" content="website"/>
+                <meta property="og:url" content="#"/>
+                <meta property="og:title" content={'Ahmad Abdul Aziz Portfolio'}/>
+                <meta property="og:description"
+                      content={'Ahmad Abdul Aziz personal portfolio. Built with Next.js, TypeScript, and Mantine UI.'}/>
+                <meta property="og:image"
+                      content={'/images/portfolio.png'}/>
+
+                {/*Twitter*/}
+                <meta property="twitter:card" content="summary_large_image"/>
+                <meta property="twitter:url" content="#"/>
+                <meta property="twitter:title" content={'Ahmad Abdul Aziz Portfolio'}/>
+                <meta property="twitter:description"
+                      content={'Ahmad Abdul Aziz personal portfolio. Built with Next.js, TypeScript, and Mantine UI.'}/>
+                <meta property="twitter:image" content={'/images/portfolio.png'}/>
+
                 <link rel="icon" href="/favicon.ico"/>
             </Head>
 
