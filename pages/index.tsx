@@ -507,6 +507,26 @@ const PROJECTS: ProjectProps[] = [
     },
     {
         id: 2,
+        name: 'PostSrc (Components)',
+        year: 2021,
+        description: 'Collection of Tailwind CSS components for everyone to use. Browse all of the components that\'s right for your project.',
+        cover: '/images/components.png',
+        link: 'https://postsrc.com/components',
+        linkText: 'View Components',
+        technology: ['HTML', 'CSS', 'JS', 'Laravel', 'Livewire', 'Alpine Js', 'Tailwind CSS'],
+    },
+    {
+        id: 3,
+        name: 'PostSrc (Snippets)',
+        year: 2021,
+        description: 'Collection of the most popular Laravel snippets, AlpineJS snippets, VueJS snippets, Tailwindcss snippets, Flutter snippets, and more.',
+        cover: '/images/snippets.png',
+        link: 'https://postsrc.com/snippets',
+        linkText: 'View Snippets',
+        technology: ['HTML', 'CSS', 'JS', 'Laravel', 'Livewire', 'Alpine Js', 'Tailwind CSS'],
+    },
+    {
+        id: 4,
         name: 'PostSrc (Blog)',
         year: 2020,
         description: 'PostSrc (Post Source) a community of programmers sharing all things programming that includes a how-to tutorial, guides, and step by steps lessons.',
@@ -522,13 +542,15 @@ const ProjectCard = ({project}: { project: ProjectProps }) => (
         <Card.Section component="a" href={project.link} target={"_blank"}>
             <Box
                 p={16}
-                bg={'gray.0'}
+                bg={'pink.0'}
             >
-                <Box
+                <Flex
+                    align={'center'}
                     p={8}
                     bg={'white'}
                     sx={(theme) => ({
                         borderRadius: theme.radius.md,
+                        height: '320px',
                     })}
                 >
                     <Image
@@ -536,7 +558,7 @@ const ProjectCard = ({project}: { project: ProjectProps }) => (
                         height={'100%'}
                         alt="Norway"
                     />
-                </Box>
+                </Flex>
             </Box>
         </Card.Section>
 
