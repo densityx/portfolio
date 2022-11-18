@@ -507,6 +507,16 @@ const PROJECTS: ProjectProps[] = [
     },
     {
         id: 2,
+        name: 'Mantine UI Music Page',
+        year: 2022,
+        description: 'Personal project to translate Music Page design into Mantine UI',
+        cover: '/images/music.png',
+        link: '/music/',
+        linkText: 'View Page',
+        technology: ['Next.js', 'TypeScript', 'Mantine UI'],
+    },
+    {
+        id: 3,
         name: 'PostSrc (Components)',
         year: 2021,
         description: 'Collection of Tailwind CSS components for everyone to use. Browse all of the components that\'s right for your project.',
@@ -516,7 +526,7 @@ const PROJECTS: ProjectProps[] = [
         technology: ['HTML', 'CSS', 'JS', 'Laravel', 'Livewire', 'Alpine Js', 'Tailwind CSS'],
     },
     {
-        id: 3,
+        id: 4,
         name: 'PostSrc (Snippets)',
         year: 2021,
         description: 'Collection of the most popular Laravel snippets, AlpineJS snippets, VueJS snippets, Tailwindcss snippets, Flutter snippets, and more.',
@@ -526,7 +536,7 @@ const PROJECTS: ProjectProps[] = [
         technology: ['HTML', 'CSS', 'JS', 'Laravel', 'Livewire', 'Alpine Js', 'Tailwind CSS'],
     },
     {
-        id: 4,
+        id: 5,
         name: 'PostSrc (Blog)',
         year: 2020,
         description: 'PostSrc (Post Source) a community of programmers sharing all things programming that includes a how-to tutorial, guides, and step by steps lessons.',
