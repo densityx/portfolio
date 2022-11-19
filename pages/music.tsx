@@ -391,6 +391,7 @@ const Logo = ({width = 125}: { width?: number }) => (
 export default function Music() {
     const theme = useMantineTheme();
     const [opened, setOpened] = useState(false);
+    const [asideOpen, setAsideOpened] = useState(false);
 
     const useStyles = createStyles((theme, _params, getRef) => ({
         'tableHead': {
@@ -411,7 +412,7 @@ export default function Music() {
         }
     }))
 
-    const matches = useMediaQuery('(max-width: 600px)');
+    const matches = useMediaQuery('(max-width: 765px)');
 
     const {classes} = useStyles();
 
@@ -502,141 +503,139 @@ export default function Music() {
                 </Navbar>
             }
             aside={
-                <MediaQuery smallerThan="sm" styles={{display: 'none'}}>
-                    <Aside p="md" hiddenBreakpoint="sm" width={{sm: 200, lg: 300}}>
-                        <Stack spacing={'xl'} sx={{height: '100%'}}>
-                            <Box>
-                                <Flex justify={'space-between'}>
-                                    <Title order={3} size={18} fw={600} color={'gray.8'}>
-                                        Search
-                                    </Title>
-                                </Flex>
+                <Aside p="md" hiddenBreakpoint="sm" hidden={!asideOpen} width={{sm: 200, lg: 300}}>
+                    <Stack spacing={'xl'} sx={{height: '100%'}}>
+                        <Box>
+                            <Flex justify={'space-between'}>
+                                <Title order={3} size={18} fw={600} color={'gray.8'}>
+                                    Search
+                                </Title>
+                            </Flex>
 
-                                <TextInput
-                                    placeholder={'Search Artist, title, album'}
-                                    mt={'md'}
-                                    radius={'xl'}
-                                    icon={<IconSearch size={14}/>}
-                                />
-                            </Box>
+                            <TextInput
+                                placeholder={'Search Artist, title, album'}
+                                mt={'md'}
+                                radius={'xl'}
+                                icon={<IconSearch size={14}/>}
+                            />
+                        </Box>
 
-                            <ScrollArea sx={{height: '100%'}} type={'never'}>
-                                <Stack spacing={'xl'}>
-                                    <Box>
-                                        <Flex justify={'space-between'}>
-                                            <Title order={3} size={18} fw={600} color={'gray.8'}>
-                                                Popular Artist
-                                            </Title>
-
-                                            <ActionIcon>
-                                                <IconDots/>
-                                            </ActionIcon>
-                                        </Flex>
-
-                                        <SimpleGrid
-                                            breakpoints={[
-                                                {maxWidth: 'xs', cols: 2},
-                                                {minWidth: 'xs', cols: 2},
-                                                {minWidth: 'lg', cols: 3}
-                                            ]}
-                                            spacing={'md'}
-                                            mt={'lg'}
-                                        >
-                                            {SIDEBAR_DATA.popularArtist.map(artist => (
-                                                <Box key={artist.id}>
-                                                    <Box bg={'gray.1'} p={'lg'} sx={(theme) => ({
-                                                        borderRadius: theme.radius.md,
-                                                    })}>
-                                                        <Image src={'https://img.logoipsum.com/284.svg'}/>
-                                                    </Box>
-
-                                                    <Text component={'p'} ta={'center'} fz={14} fw={600} mt={'sm'}
-                                                          mb={0}>
-                                                        {artist.name}
-                                                    </Text>
-                                                </Box>
-                                            ))}
-                                        </SimpleGrid>
-                                    </Box>
-
-                                    <Box>
-                                        <Flex justify={'space-between'}>
-                                            <Title order={3} size={18} fw={600} color={'gray.8'}>
-                                                Top Podcaster
-                                            </Title>
-
-                                            <ActionIcon>
-                                                <IconDots/>
-                                            </ActionIcon>
-                                        </Flex>
-
-                                        <SimpleGrid cols={2} spacing={'md'} mt={'lg'}>
-                                            {SIDEBAR_DATA.topPodcaster.map(artist => (
-                                                <Box key={artist.id}>
-                                                    <Box bg={'gray.1'} p={'lg'} sx={(theme) => ({
-                                                        borderRadius: theme.radius.md
-                                                    })}>
-                                                        <Image src={'https://img.logoipsum.com/284.svg'}/>
-                                                    </Box>
-
-                                                    <Text component={'p'} fz={14} fw={600} mt={'sm'} mb={0}>
-                                                        {artist.name}
-                                                    </Text>
-
-                                                    <Text component={'p'} fz={14} fw={400} my={0} color={'dimmed'}>
-                                                        {artist.follower}
-                                                    </Text>
-                                                </Box>
-                                            ))}
-                                        </SimpleGrid>
-                                    </Box>
-                                </Stack>
-                            </ScrollArea>
-
-                            <Box>
-                                <Flex justify={'space-between'}>
-                                    <Title order={3} size={18} fw={600} color={'gray.8'}>
-                                        Now Playing
-                                    </Title>
-
-                                    <ActionIcon>
-                                        <IconDots/>
-                                    </ActionIcon>
-                                </Flex>
-
+                        <ScrollArea sx={{height: '100%'}} type={'never'}>
+                            <Stack spacing={'xl'}>
                                 <Box>
-                                    <Box
-                                        bg={'gray.1'}
-                                        p={'lg'}
-                                        mt={'lg'}
-                                        sx={(theme) => ({
-                                            borderRadius: theme.radius.md,
-                                        })}
-                                    >
-                                        <Image src={'https://img.logoipsum.com/284.svg'}/>
-                                    </Box>
+                                    <Flex justify={'space-between'}>
+                                        <Title order={3} size={18} fw={600} color={'gray.8'}>
+                                            Popular Artist
+                                        </Title>
 
-                                    <Flex justify={'space-between'} align={'center'} mt={'md'}>
-                                        <Box>
-                                            <Text component={'p'} fz={16} fw={600} mt={'sm'} my={0}>
-                                                {SIDEBAR_DATA.nowPlaying.song}
-                                            </Text>
-
-                                            <Text component={'p'} fz={12} fw={500} my={0} color={'dimmed'}>
-                                                {SIDEBAR_DATA.nowPlaying.name} • {SIDEBAR_DATA.nowPlaying.duration}
-                                            </Text>
-                                        </Box>
-
-                                        <ActionIcon variant={'outline'} radius={'xl'} size={32}
-                                                    color={'blue.5'}>
-                                            <IconPlayerPlay/>
+                                        <ActionIcon>
+                                            <IconDots/>
                                         </ActionIcon>
                                     </Flex>
+
+                                    <SimpleGrid
+                                        breakpoints={[
+                                            {maxWidth: 'xs', cols: 2},
+                                            {minWidth: 'xs', cols: 2},
+                                            {minWidth: 'lg', cols: 3}
+                                        ]}
+                                        spacing={'md'}
+                                        mt={'lg'}
+                                    >
+                                        {SIDEBAR_DATA.popularArtist.map(artist => (
+                                            <Box key={artist.id}>
+                                                <Box bg={'gray.1'} p={'lg'} sx={(theme) => ({
+                                                    borderRadius: theme.radius.md,
+                                                })}>
+                                                    <Image src={'https://img.logoipsum.com/284.svg'}/>
+                                                </Box>
+
+                                                <Text component={'p'} ta={'center'} fz={14} fw={600} mt={'sm'}
+                                                      mb={0}>
+                                                    {artist.name}
+                                                </Text>
+                                            </Box>
+                                        ))}
+                                    </SimpleGrid>
                                 </Box>
+
+                                <Box>
+                                    <Flex justify={'space-between'}>
+                                        <Title order={3} size={18} fw={600} color={'gray.8'}>
+                                            Top Podcaster
+                                        </Title>
+
+                                        <ActionIcon>
+                                            <IconDots/>
+                                        </ActionIcon>
+                                    </Flex>
+
+                                    <SimpleGrid cols={2} spacing={'md'} mt={'lg'}>
+                                        {SIDEBAR_DATA.topPodcaster.map(artist => (
+                                            <Box key={artist.id}>
+                                                <Box bg={'gray.1'} p={'lg'} sx={(theme) => ({
+                                                    borderRadius: theme.radius.md
+                                                })}>
+                                                    <Image src={'https://img.logoipsum.com/284.svg'}/>
+                                                </Box>
+
+                                                <Text component={'p'} fz={14} fw={600} mt={'sm'} mb={0}>
+                                                    {artist.name}
+                                                </Text>
+
+                                                <Text component={'p'} fz={14} fw={400} my={0} color={'dimmed'}>
+                                                    {artist.follower}
+                                                </Text>
+                                            </Box>
+                                        ))}
+                                    </SimpleGrid>
+                                </Box>
+                            </Stack>
+                        </ScrollArea>
+
+                        <Box>
+                            <Flex justify={'space-between'}>
+                                <Title order={3} size={18} fw={600} color={'gray.8'}>
+                                    Now Playing
+                                </Title>
+
+                                <ActionIcon>
+                                    <IconDots/>
+                                </ActionIcon>
+                            </Flex>
+
+                            <Box>
+                                <Box
+                                    bg={'gray.1'}
+                                    p={'lg'}
+                                    mt={'lg'}
+                                    sx={(theme) => ({
+                                        borderRadius: theme.radius.md,
+                                    })}
+                                >
+                                    <Image src={'https://img.logoipsum.com/284.svg'}/>
+                                </Box>
+
+                                <Flex justify={'space-between'} align={'center'} mt={'md'}>
+                                    <Box>
+                                        <Text component={'p'} fz={16} fw={600} mt={'sm'} my={0}>
+                                            {SIDEBAR_DATA.nowPlaying.song}
+                                        </Text>
+
+                                        <Text component={'p'} fz={12} fw={500} my={0} color={'dimmed'}>
+                                            {SIDEBAR_DATA.nowPlaying.name} • {SIDEBAR_DATA.nowPlaying.duration}
+                                        </Text>
+                                    </Box>
+
+                                    <ActionIcon variant={'outline'} radius={'xl'} size={32}
+                                                color={'blue.5'}>
+                                        <IconPlayerPlay/>
+                                    </ActionIcon>
+                                </Flex>
                             </Box>
-                        </Stack>
-                    </Aside>
-                </MediaQuery>
+                        </Box>
+                    </Stack>
+                </Aside>
             }
             /*footer={
                 <Footer height={60} p="md">
@@ -660,6 +659,19 @@ export default function Music() {
                             <Box styles={{width: '100px'}}>
                                 <Logo width={80}/>
                             </Box>
+
+                            <MediaQuery largerThan="sm" styles={{display: 'none'}}>
+                                <ActionIcon
+                                    onClick={() => setAsideOpened((o) => !o)}
+                                    size="lg"
+                                    color={theme.colors.gray[6]}
+                                    ml={'auto'}
+                                    variant={'outline'}
+                                    radius={'xl'}
+                                >
+                                    <IconSearch size={14}/>
+                                </ActionIcon>
+                            </MediaQuery>
                         </div>
                     </Header>
                     : undefined
