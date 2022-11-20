@@ -23,7 +23,8 @@ import {
     Text,
     ThemeIcon,
     Title,
-    Tooltip
+    Tooltip,
+    useMantineTheme
 } from '@mantine/core';
 import Head from 'next/head';
 import {
@@ -304,7 +305,7 @@ const useStyles = createStyles((theme) => ({
         borderRadius: theme.radius.md,
     },
     highlight: {
-        backgroundColor: theme.colors.gray[1],
+        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[1],
         padding: theme.spacing.lg,
         borderRadius: theme.radius.lg,
         [`@media (max-width: ${theme.breakpoints.sm}px)`]: {
@@ -547,75 +548,79 @@ const PROJECTS: ProjectProps[] = [
     },
 ];
 
-const ProjectCard = ({project}: { project: ProjectProps }) => (
-    <Card shadow="md" p={'lg'} radius="lg">
-        <Card.Section component="a" href={project.link} target={"_blank"}>
-            <Box
-                p={16}
-                bg={'pink.0'}
-            >
-                <Flex
-                    align={'center'}
-                    p={8}
-                    bg={'white'}
-                    sx={(theme) => ({
-                        borderRadius: theme.radius.md,
-                        height: '320px',
-                    })}
+const ProjectCard = ({project}: { project: ProjectProps }) => {
+    const theme = useMantineTheme();
+
+    return (
+        <Card shadow="md" p={'lg'} radius="lg">
+            <Card.Section component="a" href={project.link} target={"_blank"}>
+                <Box
+                    p={16}
+                    bg={theme.colorScheme === 'dark' ? 'gray.9' : 'pink.0'}
                 >
-                    <Image
-                        src={project.cover}
-                        height={'100%'}
-                        alt="Norway"
-                    />
-                </Flex>
-            </Box>
-        </Card.Section>
+                    <Flex
+                        align={'center'}
+                        p={8}
+                        bg={'white'}
+                        sx={(theme) => ({
+                            borderRadius: theme.radius.md,
+                            height: '320px',
+                        })}
+                    >
+                        <Image
+                            src={project.cover}
+                            height={'100%'}
+                            alt="Norway"
+                        />
+                    </Flex>
+                </Box>
+            </Card.Section>
 
-        <ScrollArea type={'never'} mt={16}>
-            <Group spacing={'sm'} sx={{flexWrap: 'nowrap'}}>
-                {project.technology.map((tech, index) => (
-                    <Badge variant={'light'} color={'gray'} key={index}>
-                        {tech}
-                    </Badge>
-                ))}
+            <ScrollArea type={'never'} mt={16}>
+                <Group spacing={'sm'} sx={{flexWrap: 'nowrap'}}>
+                    {project.technology.map((tech, index) => (
+                        <Badge variant={'light'} color={'gray'} key={index}>
+                            {tech}
+                        </Badge>
+                    ))}
+                </Group>
+            </ScrollArea>
+
+            <Group position="apart" mt="md" mb="xs">
+                <Title order={3} fz={18} weight={500}>
+                    {project.name}
+                </Title>
+
+                <Badge color="pink" variant="light">
+                    {project.year}
+                </Badge>
             </Group>
-        </ScrollArea>
 
-        <Group position="apart" mt="md" mb="xs">
-            <Title order={3} fz={18} weight={500}>
-                {project.name}
-            </Title>
+            <Box sx={(theme) => ({
+                [`@media (min-width: ${theme.breakpoints.sm}px)`]: {
+                    height: theme.breakpoints.md ? '60px' : '100%',
+                }
+            })}>
+                <Text component={'p'} size="sm" color="dimmed">
+                    {project.description}
+                </Text>
+            </Box>
 
-            <Badge color="pink" variant="light">
-                {project.year}
-            </Badge>
-        </Group>
-
-        <Box sx={(theme) => ({
-            [`@media (min-width: ${theme.breakpoints.sm}px)`]: {
-                height: theme.breakpoints.md ? '60px' : '100%',
-            }
-        })}>
-            <Text component={'p'} size="sm" color="dimmed">
-                {project.description}
-            </Text>
-        </Box>
-
-        <Button
-            component={'a'}
-            href={project.link}
-            variant="light"
-            leftIcon={<IconExternalLink size={14}/>}
-            target={"_blank"}
-            color="blue"
-            fullWidth mt="md"
-            radius="md"
-        >
-            {project.linkText}
-        </Button>
-    </Card>
-);
+            <Button
+                component={'a'}
+                href={project.link}
+                variant="light"
+                leftIcon={<IconExternalLink size={14}/>}
+                target={"_blank"}
+                color="blue"
+                fullWidth mt="md"
+                radius="md"
+            >
+                {project.linkText}
+            </Button>
+        </Card>
+    )
+}
 
 const CreditSection = () => {
     const [heartCount, setHeartCount] = useState(0);
