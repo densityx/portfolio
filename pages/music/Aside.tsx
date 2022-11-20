@@ -9,7 +9,8 @@ import {
     Stack,
     Text,
     TextInput,
-    Title
+    Title,
+    useMantineTheme
 } from '@mantine/core';
 import {IconDots, IconPlayerPlay, IconSearch} from "@tabler/icons";
 
@@ -73,11 +74,13 @@ interface AsideComponentProps {
 }
 
 export default function AsideComponent({asideOpen}: AsideComponentProps) {
+    const theme = useMantineTheme();
+
     return (<Aside p="md" hiddenBreakpoint="sm" hidden={!asideOpen} width={{sm: 200, lg: 300}}>
         <Stack spacing={'xl'} sx={{height: '100%'}}>
             <Box>
                 <Flex justify={'space-between'}>
-                    <Title order={3} size={18} fw={600} color={'gray.8'}>
+                    <Title order={3} size={18} fw={600} color={theme.colorScheme === 'dark' ? 'gray.5' : 'gray.8'}>
                         Search
                     </Title>
                 </Flex>
@@ -94,7 +97,8 @@ export default function AsideComponent({asideOpen}: AsideComponentProps) {
                 <Stack spacing={'xl'}>
                     <Box>
                         <Flex justify={'space-between'}>
-                            <Title order={3} size={18} fw={600} color={'gray.8'}>
+                            <Title order={3} size={18} fw={600}
+                                   color={theme.colorScheme === 'dark' ? 'gray.5' : 'gray.8'}>
                                 Popular Artist
                             </Title>
 
@@ -114,9 +118,13 @@ export default function AsideComponent({asideOpen}: AsideComponentProps) {
                         >
                             {SIDEBAR_DATA.popularArtist.map(artist => (
                                 <Box key={artist.id}>
-                                    <Box bg={'gray.1'} p={'lg'} sx={(theme) => ({
-                                        borderRadius: theme.radius.md,
-                                    })}>
+                                    <Box
+                                        bg={theme.colorScheme === 'dark' ? 'gray.8' : 'gray.1'}
+                                        p={'lg'}
+                                        sx={(theme) => ({
+                                            borderRadius: theme.radius.md
+                                        })}
+                                    >
                                         <Image src={'https://img.logoipsum.com/284.svg'}/>
                                     </Box>
 
@@ -131,7 +139,8 @@ export default function AsideComponent({asideOpen}: AsideComponentProps) {
 
                     <Box>
                         <Flex justify={'space-between'}>
-                            <Title order={3} size={18} fw={600} color={'gray.8'}>
+                            <Title order={3} size={18} fw={600}
+                                   color={theme.colorScheme === 'dark' ? 'gray.5' : 'gray.8'}>
                                 Top Podcaster
                             </Title>
 
@@ -143,9 +152,13 @@ export default function AsideComponent({asideOpen}: AsideComponentProps) {
                         <SimpleGrid cols={2} spacing={'md'} mt={'lg'}>
                             {SIDEBAR_DATA.topPodcaster.map(artist => (
                                 <Box key={artist.id}>
-                                    <Box bg={'gray.1'} p={'lg'} sx={(theme) => ({
-                                        borderRadius: theme.radius.md
-                                    })}>
+                                    <Box
+                                        bg={theme.colorScheme === 'dark' ? 'gray.8' : 'gray.1'}
+                                        p={'lg'}
+                                        sx={(theme) => ({
+                                            borderRadius: theme.radius.md
+                                        })}
+                                    >
                                         <Image src={'https://img.logoipsum.com/284.svg'}/>
                                     </Box>
 
@@ -165,7 +178,7 @@ export default function AsideComponent({asideOpen}: AsideComponentProps) {
 
             <Box>
                 <Flex justify={'space-between'}>
-                    <Title order={3} size={18} fw={600} color={'gray.8'}>
+                    <Title order={3} size={18} fw={600} color={theme.colorScheme === 'dark' ? 'gray.5' : 'gray.8'}>
                         Now Playing
                     </Title>
 
@@ -176,11 +189,11 @@ export default function AsideComponent({asideOpen}: AsideComponentProps) {
 
                 <Box>
                     <Box
-                        bg={'gray.1'}
-                        p={'lg'}
+                        bg={theme.colorScheme === 'dark' ? 'gray.8' : 'gray.1'}
                         mt={'lg'}
+                        p={'lg'}
                         sx={(theme) => ({
-                            borderRadius: theme.radius.md,
+                            borderRadius: theme.radius.md
                         })}
                     >
                         <Image src={'https://img.logoipsum.com/284.svg'}/>
@@ -199,7 +212,7 @@ export default function AsideComponent({asideOpen}: AsideComponentProps) {
 
                         <ActionIcon variant={'outline'} radius={'xl'} size={32}
                                     color={'blue.5'}>
-                            <IconPlayerPlay/>
+                        <IconPlayerPlay/>
                         </ActionIcon>
                     </Flex>
                 </Box>

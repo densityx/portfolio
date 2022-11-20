@@ -16,7 +16,8 @@ import {
     Table,
     Tabs,
     Text,
-    Title
+    Title,
+    useMantineTheme
 } from "@mantine/core";
 import {IconDots, IconPlayerPlay, IconShare} from "@tabler/icons";
 
@@ -176,21 +177,26 @@ export default function MainContent() {
 
     const {classes} = useStyles();
 
+    const theme = useMantineTheme();
+
     return (<Container>
         <Stack spacing={'xl'}>
             <ScrollArea w={'100%'} type={'never'}>
-                <Tabs variant={'pills'} radius={'xl'}
-                      defaultValue={CATEGORY_LINKS[0].name}
-                      styles={(theme) => ({
-                          tabsList: {
-                              display: 'flex',
-                              flexWrap: 'nowrap'
-                          },
-                          tab: {
-                              backgroundColor: 'white',
-                              border: `1px solid ${theme.colors.gray[2]}`
-                          }
-                      })}>
+                <Tabs
+                    variant={'pills'}
+                    radius={'xl'}
+                    defaultValue={CATEGORY_LINKS[0].name}
+                    styles={(theme) => ({
+                        tabsList: {
+                            display: 'flex',
+                            flexWrap: 'nowrap'
+                        },
+                        tab: {
+                            backgroundColor: theme.colorScheme === 'dark' ? theme.colors.gray[8] : 'white',
+                            border: `1px solid ${theme.colorScheme === 'dark' ? theme.colors.gray[8] : theme.colors.gray[2]}`
+                        }
+                    })}
+                >
                     <Tabs.List>
                         {CATEGORY_LINKS.map(link => (
                             <Tabs.Tab value={link.name} key={link.id} icon={link.icon}>
@@ -203,11 +209,16 @@ export default function MainContent() {
 
             <Box>
                 <Flex justify={'space-between'}>
-                    <Title order={2} size={20} fw={600} color={'gray.8'}>
+                    <Title order={2} size={20} fw={600} color={theme.colorScheme === 'dark' ? 'gray.5' : 'gray.8'}>
                         Popular Now
                     </Title>
 
-                    <Anchor href={'#'} color={'gray.9'} fw={600}>
+                    <Anchor
+                        href={'#'}
+                        variant={'text'}
+                        color={theme.colorScheme === 'dark' ? 'gray.5' : 'gray.9'}
+                        fw={600}
+                    >
                         See details
                     </Anchor>
                 </Flex>
@@ -222,9 +233,13 @@ export default function MainContent() {
                 >
                     {MAIN_DATA.popularNow.map(music => (
                         <Box key={music.id}>
-                            <Box bg={'gray.1'} p={'lg'} sx={(theme) => ({
-                                borderRadius: theme.radius.md
-                            })}>
+                            <Box
+                                bg={theme.colorScheme === 'dark' ? 'gray.8' : 'gray.1'}
+                                p={'lg'}
+                                sx={(theme) => ({
+                                    borderRadius: theme.radius.md
+                                })}
+                            >
                                 <Image src={'https://img.logoipsum.com/284.svg'}/>
                             </Box>
 
@@ -244,11 +259,16 @@ export default function MainContent() {
 
             <Box>
                 <Flex justify={'space-between'}>
-                    <Title order={2} size={20} fw={600} color={'gray.8'}>
+                    <Title order={2} size={20} fw={600} color={theme.colorScheme === 'dark' ? 'gray.5' : 'gray.8'}>
                         My Recent Playlist
                     </Title>
 
-                    <Anchor href={'#'} color={'gray.9'} fw={600}>
+                    <Anchor
+                        href={'#'}
+                        variant={'text'}
+                        color={theme.colorScheme === 'dark' ? 'gray.5' : 'gray.9'}
+                        fw={600}
+                    >
                         See details
                     </Anchor>
                 </Flex>
@@ -256,9 +276,13 @@ export default function MainContent() {
                 <Box mt={'lg'}>
                     <Grid>
                         <Grid.Col lg={4}>
-                            <Box bg={'gray.1'} p={'lg'} sx={(theme) => ({
-                                borderRadius: theme.radius.md
-                            })}>
+                            <Box
+                                bg={theme.colorScheme === 'dark' ? 'gray.8' : 'gray.1'}
+                                p={'lg'}
+                                sx={(theme) => ({
+                                    borderRadius: theme.radius.md
+                                })}
+                            >
                                 <Image src={'https://img.logoipsum.com/284.svg'}/>
                             </Box>
                         </Grid.Col>
@@ -353,9 +377,14 @@ export default function MainContent() {
                     {MAIN_DATA.playlist.map((music, index) => (
                         <tr key={music.id}>
                             <td>
-                                <Box bg={'gray.1'} p={'sm'} w={60} sx={(theme) => ({
-                                    borderRadius: theme.radius.md
-                                })}>
+                                <Box
+                                    p={'sm'}
+                                    w={60}
+                                    bg={theme.colorScheme === 'dark' ? 'gray.8' : 'gray.1'}
+                                    sx={(theme) => ({
+                                        borderRadius: theme.radius.md
+                                    })}
+                                >
                                     <Image src={'https://img.logoipsum.com/284.svg'}/>
                                 </Box>
                             </td>

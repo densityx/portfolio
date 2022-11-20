@@ -1,11 +1,10 @@
 import {AppShell, useMantineTheme,} from '@mantine/core';
-
-import {useMediaQuery} from "@mantine/hooks";
 import Header from './Header';
 import Navbar from './Navbar';
 import Aside from './Aside';
-import {useState} from 'react';
 import MainContent from "./MainContent";
+import {useMediaQuery} from "@mantine/hooks";
+import {useState} from 'react';
 
 export default function Music() {
     const [opened, setOpened] = useState(false);
@@ -36,7 +35,11 @@ export default function Music() {
             }*/
             header={
                 matches ?
-                    <Header opened={opened} setAsideOpened={setAsideOpened} setOpened={setOpened}/>
+                    <Header
+                        opened={opened}
+                        setAsideOpened={setAsideOpened}
+                        setOpened={setOpened}
+                    />
                     : undefined
             }
         >
