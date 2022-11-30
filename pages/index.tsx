@@ -258,7 +258,8 @@ const SKILLS: SkillsProps[] = [
             'Laravel',
             'NuxtJs',
             'NextJs',
-            'Strapi CMS'
+            'Strapi CMS',
+            'NestJs'
         ],
         icon: 'IconServer',
     },
@@ -268,7 +269,7 @@ const SKILLS: SkillsProps[] = [
         skills: [
             'MySQL',
             'PostgreSQL',
-            'NeSQL (Firebase)',
+            'NoSQL (Firebase)',
         ],
         icon: 'IconDatabase'
     },
