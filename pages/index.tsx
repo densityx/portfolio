@@ -90,7 +90,7 @@ const ME: MeProps = {
             level: 'Professional working proficiency',
         }
     ],
-    description: 'A very passionate front-end developer that has what it takes to design, prototype, and develop web-based applications. Capable of building applications from medium to large scale using modern web technologies and best practices. Possesses good communication skills, fast learner, is goal-oriented, always open to any new inspiration, and able to work independently or as part of a team. Day-to-day development includes NextJs, ReactJs, VueJs, TailwindCSS, and Laravel.',
+    description: 'A very passionate front-end developer that has what it takes to design, prototype, and develop web-based applications. Capable of building applications from medium to large scale using modern web technologies and best practices. Possesses good communication skills, fast learner, is goal-oriented, always open to any new inspiration, and able to work independently or as part of a team. Day-to-day development includes ReactJs, NextJs, VueJs, TailwindCSS, and Laravel.',
     birthday: '29 July 1997',
     phone: '(+60) 17 629 7140',
     email: 'ahmadaziz97@live.com',
@@ -106,11 +106,11 @@ interface SkillsHighlightProps {
 }
 
 const SKILLS_HIGHLIGHT: SkillsHighlightProps[] = [
-    {id: 1, name: 'NextJs, React, NuxtJs, Vue'},
-    {id: 2, name: 'Laravel, Filament PHP, Nova'},
+    {id: 1, name: 'ReactJs, NextJs, VueJs, NuxtJs'},
+    {id: 2, name: 'Laravel, Filament, Nova, Strapi'},
     {id: 3, name: 'Figma, Adobe XD, Sketch'},
     {id: 4, name: 'Tailwind CSS, Bootstrap 5, MUI, Mantine'},
-    {id: 5, name: 'PostgreSQL, MySQL, Firebase'},
+    {id: 5, name: 'PostgreSQL, MySQL, Firestore'},
     {id: 6, name: 'HTML, CSS, JavaScript, TypeScript'},
 ];
 
@@ -233,6 +233,7 @@ const SKILLS: SkillsProps[] = [
         skills: [
             'PHP',
             'JavaScript',
+            'TypeScript',
             'Dart',
             'HTML',
             'CSS',
@@ -244,7 +245,9 @@ const SKILLS: SkillsProps[] = [
         name: 'Front end',
         skills: [
             'ReactJs',
+            'NextJs',
             'VueJs',
+            'NuxtJs',
             'AlpineJs',
             'Sass',
             'Tailwind CSS',
@@ -256,10 +259,9 @@ const SKILLS: SkillsProps[] = [
         name: 'Back end',
         skills: [
             'Laravel',
-            'NuxtJs',
-            'NextJs',
             'Strapi CMS',
-            'NestJs'
+            'NestJs',
+            'Firebase'
         ],
         icon: 'IconServer',
     },
@@ -269,7 +271,7 @@ const SKILLS: SkillsProps[] = [
         skills: [
             'MySQL',
             'PostgreSQL',
-            'NoSQL (Firebase)',
+            'NoSQL (Firestore)',
         ],
         icon: 'IconDatabase'
     },
@@ -291,6 +293,7 @@ const SKILLS: SkillsProps[] = [
             'Git',
             'AJAX',
             'Consuming API',
+            'Rest API',
             'Flutter UI',
         ],
         icon: 'IconDotsDiagonal',
