@@ -1,3 +1,5 @@
+'use client';
+
 import {ActionIcon, Burger, Flex, Header, MediaQuery, useMantineColorScheme, useMantineTheme} from "@mantine/core";
 import {IconMoonStars, IconSearch, IconSun} from "@tabler/icons";
 import Logo from "./Logo";
