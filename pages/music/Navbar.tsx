@@ -1,4 +1,4 @@
-import {Anchor, Flex, Navbar, ScrollArea, Space, Text} from "@mantine/core";
+import {ActionIcon, Anchor, Flex, Navbar, ScrollArea, Space, Text, useMantineColorScheme} from "@mantine/core";
 import Logo from "./Logo";
 import {
     IconAdjustments,
@@ -9,8 +9,10 @@ import {
     IconFiles,
     IconHeart,
     IconHome,
+    IconMoonStars,
     IconMusic,
     IconSettings,
+    IconSun,
     IconTrendingUp,
     IconUsers
 } from '@tabler/icons';
@@ -167,9 +169,24 @@ interface NavbarComponentProps {
 }
 
 export default function NavbarComponent({opened}: NavbarComponentProps) {
+    const {colorScheme, toggleColorScheme} = useMantineColorScheme();
+
     return (
         <Navbar p="md" hiddenBreakpoint="sm" hidden={!opened} width={{sm: 240, lg: 240}}>
-            <Logo/>
+            <Flex justify={'space-between'}>
+                <Logo/>
+
+                <ActionIcon
+                    onClick={() => toggleColorScheme()}
+                    variant={'light'}
+                    color={'blue'}
+                    size={'lg'}
+                    radius={'xl'}
+                    title="Toggle color scheme"
+                >
+                    {colorScheme === 'dark' ? <IconSun size={18}/> : <IconMoonStars size={18}/>}
+                </ActionIcon>
+            </Flex>
 
             <Navbar.Section component={ScrollArea} type={'never'} grow mt={'lg'} mx="-xs" px="xs">
                 <Text component={'p'} fz={'xs'} tt={'uppercase'} fw={600} color={'gray.6'}>

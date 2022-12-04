@@ -24,6 +24,7 @@ import {
     ThemeIcon,
     Title,
     Tooltip,
+    useMantineColorScheme,
     useMantineTheme
 } from '@mantine/core';
 import Head from 'next/head';
@@ -39,10 +40,12 @@ import {
     IconLanguage,
     IconMail,
     IconMapPin,
+    IconMoonStars,
     IconPhone,
     IconScribble,
     IconServer,
-    IconStar
+    IconStar,
+    IconSun
 } from "@tabler/icons";
 import {Carousel} from "@mantine/carousel";
 import {useScrollIntoView} from '@mantine/hooks';
@@ -301,6 +304,13 @@ const SKILLS: SkillsProps[] = [
 ];
 
 const useStyles = createStyles((theme) => ({
+    themeToggle: {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        marginTop: theme.spacing.xl,
+        marginLeft: theme.spacing.xl,
+    },
     card: {
         display: 'flex',
         flexDirection: 'column',
@@ -662,6 +672,7 @@ const CreditSection = () => {
 const Portfolio = () => {
     const {classes} = useStyles();
     const {scrollIntoView, targetRef} = useScrollIntoView<HTMLDivElement>();
+    const {colorScheme, toggleColorScheme} = useMantineColorScheme();
 
     return (
         <>
@@ -703,6 +714,19 @@ const Portfolio = () => {
                             overflow: 'hidden'
                         }}
                     >
+                        <Box className={classes.themeToggle}>
+                            <ActionIcon
+                                onClick={() => toggleColorScheme()}
+                                variant={'light'}
+                                color={'blue'}
+                                size={'lg'}
+                                radius={'xl'}
+                                title="Toggle color scheme"
+                            >
+                                {colorScheme === 'dark' ? <IconSun size={18}/> : <IconMoonStars size={18}/>}
+                            </ActionIcon>
+                        </Box>
+
                         <Avatar
                             variant="filled"
                             size="xl"

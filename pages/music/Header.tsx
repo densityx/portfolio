@@ -1,5 +1,5 @@
-import {ActionIcon, Box, Burger, Header, MediaQuery, useMantineTheme} from "@mantine/core";
-import {IconSearch} from "@tabler/icons";
+import {ActionIcon, Burger, Flex, Header, MediaQuery, useMantineColorScheme, useMantineTheme} from "@mantine/core";
+import {IconMoonStars, IconSearch, IconSun} from "@tabler/icons";
 import Logo from "./Logo";
 
 interface HeaderComponentProps {
@@ -12,6 +12,7 @@ interface HeaderComponentProps {
 
 export default function HeaderComponent({opened, setOpened, setAsideOpened}: HeaderComponentProps) {
     const theme = useMantineTheme();
+    const {colorScheme, toggleColorScheme} = useMantineColorScheme();
 
     return (
         <Header height={{base: 50, md: 70}} p="md">
@@ -26,9 +27,21 @@ export default function HeaderComponent({opened, setOpened, setAsideOpened}: Hea
                     />
                 </MediaQuery>
 
-                <Box styles={{width: '100px'}}>
+                <Flex align={'center'}>
                     <Logo width={80}/>
-                </Box>
+
+                    <ActionIcon
+                        onClick={() => toggleColorScheme()}
+                        variant={'light'}
+                        color={'blue'}
+                        size={'lg'}
+                        radius={'xl'}
+                        title="Toggle color scheme"
+                        ml={16}
+                    >
+                        {colorScheme === 'dark' ? <IconSun size={18}/> : <IconMoonStars size={18}/>}
+                    </ActionIcon>
+                </Flex>
 
                 <MediaQuery largerThan="sm" styles={{display: 'none'}}>
                     <ActionIcon
